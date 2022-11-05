@@ -10,10 +10,10 @@
     <script>
 
         let choice = ["Rock", "Paper", "Scissors"]
-        let computerChoiceArrayNumber;
+        let computerChoiceArrayNumber; //rock = 0, paper = 1, scissors = 2
 
         let playerTypedString;
-        let playerChoiceArrayNumber;
+        let playerChoiceArrayNumber; //rock = 0, paper = 1, scissors = 2
 
         let playerScore = 0;
         let computerScore = 0;
@@ -29,21 +29,31 @@
                 getPlayerInput();
 
                 if(playerTypedString){
-                determineWinner(playerTypedString, getComputerChoice());
+                    if(determineWinner(playerTypedString, getComputerChoice()) === true){
+                        console.log("true");
+                    }else{
+                        console.log("false");
+                        i--;
+                    }
+                
                 }
             }
             if(playerScore > computerScore){
-            alert(`Your score: ${playerScore}\nComputer's score: ${computerScore}\nYou win!`);
+                alert(`Your score: ${playerScore}\nComputer's score: ${computerScore}\nYou win!`);
             }else if(playerScore < computerScore){
                 alert(`Your score: ${playerScore}\nComputer's score: ${computerScore}\nYou loose.`);
-            }
-            else{
+            }else{
                 alert(`Your score: ${playerScore}\nComputer's score: ${computerScore}\nDraw.`);
             }
 
             if(confirm("Do you want to play again?")){
                 playTheGame();
             }
+        }
+
+        // turns player input into lowercase string
+        function getPlayerInput(){ 
+            playerTypedString = prompt("Enter your choice", "rock, paper or scissor").toLowerCase();
         }
 
         //get a number between 0 and 2 for the computers choice
@@ -67,35 +77,36 @@
                 playerChoiceArrayNumber = null;
             }
         }
-
-        // turns player input into lowercase string
-        function getPlayerInput(){ 
-                playerTypedString = prompt("Enter your choice", "rock, paper or scissor").toLowerCase();
-        }
         
         //takes the players choice and compares it to the computers to determine winner
         function determineWinner(currentPlayerString, currentComputerChoiceArrayNumber){ 
             getPlayerChoiceArayNumber(currentPlayerString);
             let result;
+            let runs;
 
             if(playerChoiceArrayNumber === null){
                 result = "Invalid input. Try again.";
+                runs = false;
             }
             else if(playerChoiceArrayNumber === currentComputerChoiceArrayNumber){
                 result = `You picked ${choice[playerChoiceArrayNumber]} and the computer picked ${choice[currentComputerChoiceArrayNumber]} as well.\nThat's a draw.`
+                runs = true;
             }
             else if((playerChoiceArrayNumber === 0 && currentComputerChoiceArrayNumber === 2) || (playerChoiceArrayNumber === 1 && currentComputerChoiceArrayNumber === 0) || (playerChoiceArrayNumber === 2 && currentComputerChoiceArrayNumber === 1)){
                 result = `You picked ${choice[playerChoiceArrayNumber]} and the computer picked ${choice[currentComputerChoiceArrayNumber]}.\nYou win this round!`
                 playerScore++;
+                runs = true;
                 console.log(playerScore);
             }
             else{
                 result = `You picked ${choice[playerChoiceArrayNumber]} and the computer picked ${choice[currentComputerChoiceArrayNumber]}.\nYou loose this round.`
                 computerScore++;
+                runs = true;
                 console.log(computerScore);
             }
-
+            
             alert(result);
+            return runs;
 
         }
 

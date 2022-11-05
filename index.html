@@ -24,7 +24,8 @@
             playerScore = 0;
             computerScore = 0;
 
-            for (let i = 0; i < 5; i++){
+            //plays a round every loop
+            for (let i = 0; i < 5; i++){ 
                 getPlayerInput();
 
                 if(playerTypedString){
@@ -45,13 +46,14 @@
             }
         }
 
-        function getComputerChoice(){
+        //get a number between 0 and 2 for the computers choice
+        function getComputerChoice(){ 
             computerChoiceArrayNumber = Math.floor(Math.random() * 3);
             return computerChoiceArrayNumber;
         }
 
-        function getPlayerChoiceArayNumber(playerString){
-
+        // if the player types in any word starting with the letter "r", "p" or "s" it assumes the player meant the word starting with said letter
+        function getPlayerChoiceArayNumber(playerString){ 
             if(playerString.charAt(0) === "r"){
                 playerChoiceArrayNumber = 0;
             }
@@ -66,11 +68,13 @@
             }
         }
 
-        function getPlayerInput(){
+        // turns player input into lowercase string
+        function getPlayerInput(){ 
                 playerTypedString = prompt("Enter your choice", "rock, paper or scissor").toLowerCase();
         }
-
-        function determineWinner(currentPlayerString, currentComputerChoiceArrayNumber){
+        
+        //takes the players choice and compares it to the computers to determine winner
+        function determineWinner(currentPlayerString, currentComputerChoiceArrayNumber){ 
             getPlayerChoiceArayNumber(currentPlayerString);
             let result;
 

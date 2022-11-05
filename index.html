@@ -12,21 +12,45 @@
         let choice = ["Rock", "Paper", "Scissors"]
         let computerChoiceArrayNumber;
 
-        let playerTypedString = prompt("Enter your choice", "rock, paper or scissor").toLowerCase();
+        let playerTypedString;
         let playerChoiceArrayNumber;
 
-        if(playerTypedString){
-        determineWinner(playerTypedString, getComputerChoice());
+        let playerScore = 0;
+        let computerScore = 0;
+
+        playTheGame();
+
+        function playTheGame(){
+            playerScore = 0;
+            computerScore = 0;
+
+            for (let i = 0; i < 5; i++){
+                getPlayerInput();
+
+                if(playerTypedString){
+                determineWinner(playerTypedString, getComputerChoice());
+                }
+            }
+            if(playerScore > computerScore){
+            alert(`Your score: ${playerScore}\nComputer's score: ${computerScore}\nYou win!`);
+            }else if(playerScore < computerScore){
+                alert(`Your score: ${playerScore}\nComputer's score: ${computerScore}\nYou loose.`);
+            }
+            else{
+                alert(`Your score: ${playerScore}\nComputer's score: ${computerScore}\nDraw.`);
+            }
+
+            if(confirm("Do you want to play again?")){
+                playTheGame();
+            }
         }
 
         function getComputerChoice(){
             computerChoiceArrayNumber = Math.floor(Math.random() * 3);
-            console.log(computerChoiceArrayNumber);
             return computerChoiceArrayNumber;
         }
 
-        function getPlayerChoice(playerString){
-            playerChoice = choice;
+        function getPlayerChoiceArayNumber(playerString){
 
             if(playerString.charAt(0) === "r"){
                 playerChoiceArrayNumber = 0;
@@ -42,27 +66,33 @@
             }
         }
 
+        function getPlayerInput(){
+                playerTypedString = prompt("Enter your choice", "rock, paper or scissor").toLowerCase();
+        }
 
         function determineWinner(currentPlayerString, currentComputerChoiceArrayNumber){
-            getPlayerChoice(currentPlayerString);
+            getPlayerChoiceArayNumber(currentPlayerString);
             let result;
 
             if(playerChoiceArrayNumber === null){
-                alert("Invalid input");
-                return;
+                result = "Invalid input. Try again.";
             }
-
-            if(playerChoiceArrayNumber === currentComputerChoiceArrayNumber){
-                result = `You picked ${choice[playerChoiceArrayNumber]} and the computer picked ${choice[currentComputerChoiceArrayNumber]} as well.\n That's a draw.`
+            else if(playerChoiceArrayNumber === currentComputerChoiceArrayNumber){
+                result = `You picked ${choice[playerChoiceArrayNumber]} and the computer picked ${choice[currentComputerChoiceArrayNumber]} as well.\nThat's a draw.`
             }
             else if((playerChoiceArrayNumber === 0 && currentComputerChoiceArrayNumber === 2) || (playerChoiceArrayNumber === 1 && currentComputerChoiceArrayNumber === 0) || (playerChoiceArrayNumber === 2 && currentComputerChoiceArrayNumber === 1)){
-                result = `You picked ${choice[playerChoiceArrayNumber]} and the computer picked ${choice[currentComputerChoiceArrayNumber]}.\n You win!`
+                result = `You picked ${choice[playerChoiceArrayNumber]} and the computer picked ${choice[currentComputerChoiceArrayNumber]}.\nYou win this round!`
+                playerScore++;
+                console.log(playerScore);
             }
             else{
-                result = `You picked ${choice[playerChoiceArrayNumber]} and the computer picked ${choice[currentComputerChoiceArrayNumber]}.\n You loose.`
+                result = `You picked ${choice[playerChoiceArrayNumber]} and the computer picked ${choice[currentComputerChoiceArrayNumber]}.\nYou loose this round.`
+                computerScore++;
+                console.log(computerScore);
             }
+
             alert(result);
-            console.log(playerChoiceArrayNumber + " and " + currentComputerChoiceArrayNumber);
+
         }
 
     </script>
